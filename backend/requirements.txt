@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+python-dotenv
+motor
+langchain
+langchain-google-genai
+langgraph
+faiss-cpu
+sentence-transformers
+tavily-python
+arxiv
+pydantic
+pydantic-settings
+requests
