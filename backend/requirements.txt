@@ -8,6 +8,7 @@ langgraph
 faiss-cpu
 sentence-transformers
 tavily-python
+langchain-tavily
 arxiv
 pydantic
 pydantic-settings
