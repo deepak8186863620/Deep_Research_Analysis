@@ -4,11 +4,14 @@ python-dotenv
 motor
 langchain
 langchain-google-genai
+langchain-community
+langchain-huggingface
+langchain-text-splitters
 langgraph
 faiss-cpu
 sentence-transformers
-tavily-python
 langchain-tavily
+tavily-python
 arxiv
 pydantic
 pydantic-settings
