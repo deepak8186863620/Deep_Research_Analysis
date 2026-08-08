@@ -1,6 +1,6 @@
 /* ============================================================
    index.css — Global Design System
-   Inspired by: Gemini UI (dark, gradient glow, premium feel)
+   Deep Research Analysis — Gemini-inspired white UI
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
@@ -22,6 +22,7 @@
   --accent-blue:     #4285f4;
   --accent-purple:   #9b72cb;
   --accent-red:      #d96570;
+  --accent-teal:     #0d9488;
   --accent-gradient: linear-gradient(135deg, #4285f4, #9b72cb);
 
   --glow-color:      rgba(74, 144, 217, 0.10);
@@ -55,54 +56,55 @@ body {
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.18); }
 
 /* ── Utility ── */
 button { cursor: pointer; border: none; background: none; font-family: var(--font-main); }
 input, textarea { font-family: var(--font-main); outline: none; border: none; background: none; }
 a { text-decoration: none; color: inherit; }
 
-/* ── Glow Background ── */
+/* ── Mesh Background Glow ── */
 .glow-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: 
-    radial-gradient(circle at 15% 50%, rgba(66, 133, 244, 0.08), transparent 40%),
-    radial-gradient(circle at 85% 30%, rgba(155, 114, 203, 0.08), transparent 40%),
-    radial-gradient(circle at 50% 80%, rgba(217, 101, 112, 0.05), transparent 40%);
+  background:
+    radial-gradient(ellipse at 15% 50%, rgba(66, 133, 244, 0.07), transparent 50%),
+    radial-gradient(ellipse at 85% 25%, rgba(155, 114, 203, 0.07), transparent 50%),
+    radial-gradient(ellipse at 50% 85%, rgba(217, 101, 112, 0.05), transparent 50%);
   pointer-events: none;
   z-index: 0;
-  animation: bg-shift 10s ease-in-out infinite alternate;
+  animation: bg-shift 12s ease-in-out infinite alternate;
 }
 
 @keyframes bg-shift {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.05); }
+  0%   { opacity: 0.8; transform: scale(1); }
+  100% { opacity: 1;   transform: scale(1.04); }
 }
 
 /* ── Fade-in Animation ── */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-.fade-up { animation: fadeUp 0.5s ease forwards; }
+.fade-up { animation: fadeUp 0.45s ease forwards; }
 
 /* ── Spinner ── */
 @keyframes spin { to { transform: rotate(360deg); } }
 .spinner {
   width: 20px; height: 20px;
-  border: 2px solid rgba(255,255,255,0.15);
+  border: 2px solid rgba(0,0,0,0.08);
   border-top-color: var(--accent-blue);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.75s linear infinite;
   display: inline-block;
+  flex-shrink: 0;
 }
 
-/* ── Typing dots ── */
+/* ── Typing / Bounce Dots ── */
 @keyframes dot-bounce {
   0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
   40%           { transform: scale(1);   opacity: 1; }
@@ -117,3 +119,9 @@ a { text-decoration: none; color: inherit; }
 .typing-dot:nth-child(1) { animation: dot-bounce 1.2s ease-in-out infinite 0s; }
 .typing-dot:nth-child(2) { animation: dot-bounce 1.2s ease-in-out infinite 0.2s; }
 .typing-dot:nth-child(3) { animation: dot-bounce 1.2s ease-in-out infinite 0.4s; }
+
+/* ── Glow Pulse (used by model dot) ── */
+@keyframes glowPulse {
+  0%   { box-shadow: 0 0 4px var(--accent-purple); }
+  100% { box-shadow: 0 0 12px var(--accent-purple), 0 0 20px rgba(155, 114, 203, 0.4); }
+}

@@ -1,5 +1,4 @@
 // components/Sidebar.jsx
-import { useState } from 'react';
 import '../styles/Sidebar.css';
 
 const MenuIcon = () => (
@@ -34,16 +33,28 @@ const SettingsIcon = () => (
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
   </svg>
 );
+const TrashIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" width="14" height="14">
+    <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/>
+  </svg>
+);
 
-export default function Sidebar({ isOpen, onToggle, history = [], onSelectTask, activeTaskId }) {
+const STATUS_DOT_CLASSES = {
+  completed:  'completed',
+  processing: 'processing',
+  pending:    'pending',
+  failed:     'failed',
+};
+
+export default function Sidebar({ isOpen, onToggle, history = [], onSelectTask, onDeleteTask, onNewResearch, activeTaskId }) {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       {/* Top controls */}
       <div className="sidebar-top">
-        <button className="icon-btn" onClick={onToggle} title="Toggle sidebar">
+        <button id="sidebar-toggle-btn" className="icon-btn" onClick={onToggle} title="Toggle sidebar">
           <MenuIcon />
         </button>
-        <button className="icon-btn" title="New research">
+        <button id="new-research-btn" className="icon-btn" title="New research" onClick={onNewResearch}>
           <PenIcon />
         </button>
       </div>
@@ -71,21 +82,38 @@ export default function Sidebar({ isOpen, onToggle, history = [], onSelectTask, 
           {history.map((task) => (
             <div
               key={task.id}
-              className="history-item"
+              className={`history-item ${activeTaskId === task.id ? 'active' : ''}`}
               onClick={() => onSelectTask(task)}
-              style={{ background: activeTaskId === task.id ? 'var(--bg-hover)' : '' }}
             >
-              <span className={`history-dot ${task.status}`} />
+              <span className={`history-dot ${STATUS_DOT_CLASSES[task.status] || 'pending'}`} />
               <span className="history-text">{task.topic}</span>
+              <button
+                className="delete-btn"
+                title="Delete"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteTask(task.id);
+                }}
+              >
+                <TrashIcon />
+              </button>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Empty state */}
+      {history.length === 0 && isOpen && (
+        <div className="sidebar-empty">
+          <span>No research yet</span>
+          <small>Your topics will appear here</small>
         </div>
       )}
 
       {/* Bottom: settings + user */}
       <div className="sidebar-bottom">
         <div className="user-row">
-          <button className="icon-btn" title="Settings">
+          <button id="sidebar-settings-btn" className="icon-btn" title="Settings">
             <SettingsIcon />
           </button>
           <div className="user-avatar" title="Deepak">D</div>

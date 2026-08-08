@@ -11,11 +11,13 @@ class Database:
 
 db_instance = Database()
 
+import certifi
+
 async def connect_to_mongo():
     logger.info("Connecting to MongoDB...")
     try:
         # Create an async connection to the database URI from our config
-        db_instance.client = AsyncIOMotorClient(settings.MONGODB_URI)
+        db_instance.client = AsyncIOMotorClient(settings.MONGODB_URI, tlsCAFile=certifi.where())
         # Select our specific database named "deep_research_db"
         db_instance.db = db_instance.client["deep_research_db"]
         logger.info("Successfully connected to MongoDB!")

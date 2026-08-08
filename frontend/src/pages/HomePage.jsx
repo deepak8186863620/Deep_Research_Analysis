@@ -38,11 +38,12 @@ export default function HomePage({ onSubmit, isLoading }) {
   const [topic, setTopic] = useState('');
   const [instructions, setInstructions] = useState('');
   const [showInstructions, setShowInstructions] = useState(false);
+  const [mode, setMode] = useState('quick'); // 'quick' or 'deep'
 
   const handleSubmit = () => {
     const trimmed = topic.trim();
     if (!trimmed || isLoading) return;
-    onSubmit(trimmed, instructions.trim());
+    onSubmit(trimmed, instructions.trim(), mode);
     setTopic('');
     setInstructions('');
     setShowInstructions(false);
@@ -57,6 +58,10 @@ export default function HomePage({ onSubmit, isLoading }) {
 
   const handleChipClick = (label) => {
     setTopic(label);
+  };
+
+  const toggleMode = () => {
+    setMode(m => m === 'quick' ? 'deep' : 'quick');
   };
 
   return (
@@ -107,10 +112,16 @@ export default function HomePage({ onSubmit, isLoading }) {
 
           {/* Right controls */}
           <div className="input-right">
-            <button className="model-badge" title="Deep Research model">
-              <span className="model-dot" />
-              <span>Deep Research</span>
-              <svg viewBox="0 0 24 24" width="12" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg>
+            <button 
+              className={`model-badge ${mode === 'deep' ? 'deep-mode' : ''}`} 
+              onClick={toggleMode}
+              title={mode === 'deep' ? "Deep Verification Mode (~5 min)" : "Quick Research Mode (~1 min)"}
+            >
+              <span className={`model-dot ${mode === 'deep' ? 'deep-dot' : ''}`} />
+              <span>{mode === 'deep' ? 'Deep Verification' : 'Quick Research'}</span>
+              <svg viewBox="0 0 24 24" width="12" fill="currentColor" style={{ transform: mode === 'deep' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
+                <path d="M7 10l5 5 5-5z"/>
+              </svg>
             </button>
             <button
               className="input-btn mic-btn"
