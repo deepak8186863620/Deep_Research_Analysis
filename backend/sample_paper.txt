@@ -1,0 +1,3 @@
+Semantic Scholar is an AI-backed search engine for academic publications. It was developed by the Allen Institute for AI and released in 2015. Unlike traditional search engines, it uses natural language processing to provide summaries, extract key findings, and map relationships between papers.
+
+FAISS (Facebook AI Similarity Search) is a library that allows developers to quickly search for embeddings of multimedia documents that are similar to each other. It solves limitations of traditional query search engines that are optimized for hash-based searches, and provides more scalable vector similarity search functions.
