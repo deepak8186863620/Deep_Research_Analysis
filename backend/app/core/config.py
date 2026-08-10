@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     GOOGLE_API_KEY: str = ""
     TAVILY_API_KEY: str = ""
     SEMANTIC_SCHOLAR_API_KEY: str = ""
-    GEMINI_MODEL: str = "gemini-2.5-pro"
+    GEMINI_MODEL: str = "gemini-1.5-flash"
 
     class Config:
         env_file = ".env"
