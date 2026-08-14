@@ -282,7 +282,7 @@ async def run_research_task(task_id: str, topic: str, instructions: Optional[str
         # (prevents infinite loops if the model keeps searching without answering)
         final_state = await research_graph.ainvoke(
             {"messages": [HumanMessage(content=prompt)]},
-            config={"recursion_limit": 25},
+            config={"recursion_limit": 50},
         )
 
         # extract_text_from_message is imported from app/utils/text_utils.py

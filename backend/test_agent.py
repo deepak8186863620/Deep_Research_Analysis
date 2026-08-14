@@ -1,6 +1,10 @@
 import asyncio
 from dotenv import load_dotenv
 import os
+import sys
+
+# Configure stdout to handle UTF-8 characters (like emojis) in Windows terminal
+sys.stdout.reconfigure(encoding='utf-8')
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), ".env"))
 
@@ -27,6 +31,8 @@ async def main():
     print("3. Fetching Tavily...")
     tavily_results = _fetch_tavily_multi(topic)
     print(f"Found {len(tavily_results)} URLs from Tavily.")
+
+   
 
     urls_to_fetch = tavily_results[:2]
     web_pages = []
