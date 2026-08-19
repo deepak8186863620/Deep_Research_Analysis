@@ -8,21 +8,21 @@ import '../styles/HomePage.css';
 
 const MicIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" width="22" height="22">
-    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
-    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/>
-    <line x1="8" y1="23" x2="16" y2="23"/>
+    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2" /><line x1="12" y1="19" x2="12" y2="23" />
+    <line x1="8" y1="23" x2="16" y2="23" />
   </svg>
 );
 
 const ArrowIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" width="22" height="22">
-    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
   </svg>
 );
 
 const PlusIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" width="22" height="22">
-    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    <line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" />
   </svg>
 );
 
@@ -30,7 +30,7 @@ const SUGGESTION_CHIPS = [
   { emoji: '🧬', label: 'CRISPR gene editing breakthroughs' },
   { emoji: '🤖', label: 'Large language models 2024' },
   { emoji: '🌍', label: 'Climate change mitigation strategies' },
-  { emoji: '⚛️',  label: 'Quantum computing progress' },
+  { emoji: '⚛️', label: 'Quantum computing progress' },
   { emoji: '💊', label: 'mRNA vaccine technology' },
 ];
 
@@ -38,12 +38,11 @@ export default function HomePage({ onSubmit, isLoading }) {
   const [topic, setTopic] = useState('');
   const [instructions, setInstructions] = useState('');
   const [showInstructions, setShowInstructions] = useState(false);
-  const [mode, setMode] = useState('quick'); // 'quick' or 'deep'
 
   const handleSubmit = () => {
     const trimmed = topic.trim();
     if (!trimmed || isLoading) return;
-    onSubmit(trimmed, instructions.trim(), mode);
+    onSubmit(trimmed, instructions.trim());
     setTopic('');
     setInstructions('');
     setShowInstructions(false);
@@ -58,10 +57,6 @@ export default function HomePage({ onSubmit, isLoading }) {
 
   const handleChipClick = (label) => {
     setTopic(label);
-  };
-
-  const toggleMode = () => {
-    setMode(m => m === 'quick' ? 'deep' : 'quick');
   };
 
   return (
@@ -112,16 +107,10 @@ export default function HomePage({ onSubmit, isLoading }) {
 
           {/* Right controls */}
           <div className="input-right">
-            <button 
-              className={`model-badge ${mode === 'deep' ? 'deep-mode' : ''}`} 
-              onClick={toggleMode}
-              title={mode === 'deep' ? "Deep Verification Mode (~5 min)" : "Quick Research Mode (~1 min)"}
-            >
-              <span className={`model-dot ${mode === 'deep' ? 'deep-dot' : ''}`} />
-              <span>{mode === 'deep' ? 'Deep Verification' : 'Quick Research'}</span>
-              <svg viewBox="0 0 24 24" width="12" fill="currentColor" style={{ transform: mode === 'deep' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>
-                <path d="M7 10l5 5 5-5z"/>
-              </svg>
+            <button className="model-badge" title="Deep Research model">
+              <span className="model-dot" />
+              <span>Deep Research</span>
+              <svg viewBox="0 0 24 24" width="12" fill="currentColor"><path d="M7 10l5 5 5-5z" /></svg>
             </button>
             <button
               className="input-btn mic-btn"
@@ -158,7 +147,7 @@ export default function HomePage({ onSubmit, isLoading }) {
       </div>
 
       <p className="disclaimer fade-up" style={{ animationDelay: '0.3s' }}>
-        Deep Research uses Semantic Scholar + live web search to synthesize academic and current findings.
+        Deep Research uses Semantic Scholar + arXiv for live web search to synthesize academic and current findings.
       </p>
     </div>
   );

@@ -1,5 +1,6 @@
 import os
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings # allows Pydantic to read configuration values from environment variables, especially from a .env file. #
+#if we use this base setting we dont need to hard cord the important key like everytime we dont need to call the url of mongo db and othere skey
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Deep Research Analysis API"

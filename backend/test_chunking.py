@@ -101,23 +101,23 @@ faiss_store = FAISS.from_documents(all_chunks, embeddings)
 print(f"[OK] FAISS index built in RAM with {len(all_chunks)} vectors")
 
 # ── 4. Run a semantic search ──────────────────────────────────────────────────
-# ── 4. Run interactive semantic search ───────────────────────────────────────
 print("\n" + "="*60)
-print("STEP 4: Interactive semantic search on FAISS index")
+print("STEP 4: Running semantic search on FAISS index...")
 print("="*60)
 
-while True:
-    query = input("\nEnter your query (or type 'exit' to quit): ")
-    if query.lower() in ["exit", "quit"]:
-        print("\n[OK] Exiting semantic search loop.")
-        break
+query = "How does the attention mechanism work?"
+print(f"\n  Query: \"{query}\"\n")
 
-    results = faiss_store.similarity_search(query, k=5)
+results = faiss_store.similarity_search(query, k=5)
 
-    print(f"\nTop {len(results)} most relevant chunks:\n")
-    for i, doc in enumerate(results):
-        meta = doc.metadata
-        print(f"Result {i+1}:")
-        print(f"  Source    : '{meta.get('title', 'Unknown')[:55]}...'")
-        print(f"  Year/Cite : {meta.get('year')} | {meta.get('citations', 0)} citations")
-        print(f"  Content   : \"{doc.page_content[:150].strip()}...\"\n")
+print(f"  Top {len(results)} most relevant chunks found:\n")
+for i, doc in enumerate(results):
+    meta = doc.metadata
+    print(f"  Result {i+1}:")
+    print(f"    Source    : '{meta.get('title', 'Unknown')[:55]}...'")
+    print(f"    Year/Cite : {meta.get('year')} | {meta.get('citations', 0)} citations")
+    print(f"    Content   : \"{doc.page_content[:150].strip()}...\"\n")
+
+print("="*60)
+print("[OK] ALL CHECKS PASSED -- Chunking + FAISS are working correctly!")
+print("="*60 + "\n")

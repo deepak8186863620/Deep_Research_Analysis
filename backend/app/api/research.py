@@ -32,7 +32,6 @@ async def list_research_tasks(limit: int = 30):
         })
     return tasks
 
-
 @router.post("/", response_model=ResearchResponse)
 async def create_research_task(request: ResearchRequest, background_tasks: BackgroundTasks):
     """

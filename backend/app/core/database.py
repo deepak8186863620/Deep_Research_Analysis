@@ -1,7 +1,7 @@
-import ssl
-import logging
-import certifi
-from motor.motor_asyncio import AsyncIOMotorClient
+import ssl #secure socket layer it is used for the encryption between the website and user so the other user could not seeit 
+import logging #it is used to print  the error messages and infos 
+import certifi #Python can verify MongoDB Atlas's TLS certificate against a known-good set of certificate authorities
+from motor.motor_asyncio import AsyncIOMotorClient #it is used  so it can match the asynchronous property of the fasApi at the time of running 
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
