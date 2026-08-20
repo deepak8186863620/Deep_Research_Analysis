@@ -63,7 +63,7 @@ export default function HomePage({ onSubmit, isLoading }) {
     <div className="home-page">
       {/* Greeting */}
       <div className="greeting fade-up">
-        <h1 className="greeting-title">Let's dive in, Deepak</h1>
+        <h1 className="greeting-title">Let's dive in </h1>
         <p className="greeting-subtitle">Ask anything. I'll research it across academic papers and the web.</p>
       </div>
 
