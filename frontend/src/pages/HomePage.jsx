@@ -4,6 +4,7 @@
 // It contains the centered heading, subtitle chips, and the research input bar.
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import '../styles/HomePage.css';
 
 const MicIcon = () => (
@@ -62,13 +63,28 @@ export default function HomePage({ onSubmit, isLoading }) {
   return (
     <div className="home-page">
       {/* Greeting */}
+<<<<<<< HEAD
       <div className="greeting fade-up">
         <h1 className="greeting-title">Let's dive in </h1>
+=======
+      <motion.div 
+        className="greeting"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="greeting-title">Let's start, Deepak</h1>
+>>>>>>> f5bb9be ( web page color upadtion)
         <p className="greeting-subtitle">Ask anything. I'll research it across academic papers and the web.</p>
-      </div>
+      </motion.div>
 
       {/* Suggestion chips */}
-      <div className="chips fade-up" style={{ animationDelay: '0.1s' }}>
+      <motion.div 
+        className="chips"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
         {SUGGESTION_CHIPS.map((chip) => (
           <button
             key={chip.label}
@@ -79,10 +95,15 @@ export default function HomePage({ onSubmit, isLoading }) {
             <span>{chip.label}</span>
           </button>
         ))}
-      </div>
+      </motion.div>
 
       {/* Research input */}
-      <div className="input-wrapper fade-up" style={{ animationDelay: '0.2s' }}>
+      <motion.div 
+        className="input-wrapper"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <div className={`input-box ${isLoading ? 'loading' : ''}`}>
           {/* Left: attach / instructions toggle */}
           <button
@@ -134,7 +155,12 @@ export default function HomePage({ onSubmit, isLoading }) {
 
         {/* Optional instructions panel */}
         {showInstructions && (
-          <div className="instructions-panel fade-up">
+          <motion.div 
+            className="instructions-panel"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+          >
             <textarea
               className="instructions-input"
               placeholder="Add specific instructions (e.g. 'Focus only on 2023–2024 papers', 'Explain like I'm 5')…"
@@ -142,13 +168,18 @@ export default function HomePage({ onSubmit, isLoading }) {
               onChange={(e) => setInstructions(e.target.value)}
               rows={2}
             />
-          </div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
 
-      <p className="disclaimer fade-up" style={{ animationDelay: '0.3s' }}>
+      <motion.p 
+        className="disclaimer"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
         Deep Research uses Semantic Scholar + arXiv for live web search to synthesize academic and current findings.
-      </p>
+      </motion.p>
     </div>
   );
 }

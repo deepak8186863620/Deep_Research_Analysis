@@ -15,10 +15,11 @@
 .greeting { text-align: center; }
 
 .greeting-title {
-  font-size: clamp(34px, 5vw, 52px);
+  font-family: var(--font-heading);
+  font-size: clamp(38px, 5vw, 56px);
   font-weight: 500;
-  letter-spacing: -0.5px;
-  background: linear-gradient(74deg, #4285f4 0%, #9b72cb 20%, #d96570 40%, #1a1d2e 60%, #1a1d2e 100%);
+  letter-spacing: -0.8px;
+  background: linear-gradient(74deg, #4A6B7C 0%, #8C7A6B 20%, #C87968 40%, #2C2A25 60%, #2C2A25 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -78,17 +79,17 @@
   display: flex;
   align-items: flex-end;
   gap: 10px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--input-radius);
   padding: 16px 16px 16px 22px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   transition: all var(--transition);
 }
 
 .input-box:focus-within {
-  border-color: rgba(0, 0, 0, 0.14);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
 }
 
 .input-box.loading {

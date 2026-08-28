@@ -1,4 +1,5 @@
 // components/Sidebar.jsx
+import { motion, AnimatePresence } from 'framer-motion';
 import '../styles/Sidebar.css';
 
 const MenuIcon = () => (
@@ -79,26 +80,31 @@ export default function Sidebar({ isOpen, onToggle, history = [], onSelectTask, 
       {history.length > 0 && (
         <div className="sidebar-history">
           <div className="history-label">Recent</div>
-          {history.map((task) => (
-            <div
-              key={task.id}
-              className={`history-item ${activeTaskId === task.id ? 'active' : ''}`}
-              onClick={() => onSelectTask(task)}
-            >
-              <span className={`history-dot ${STATUS_DOT_CLASSES[task.status] || 'pending'}`} />
-              <span className="history-text">{task.topic}</span>
-              <button
-                className="delete-btn"
-                title="Delete"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onDeleteTask(task.id);
-                }}
+          <AnimatePresence>
+            {history.map((task) => (
+              <motion.div
+                key={task.id}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className={`history-item ${activeTaskId === task.id ? 'active' : ''}`}
+                onClick={() => onSelectTask(task)}
               >
-                <TrashIcon />
-              </button>
-            </div>
-          ))}
+                <span className={`history-dot ${STATUS_DOT_CLASSES[task.status] || 'pending'}`} />
+                <span className="history-text">{task.topic}</span>
+                <button
+                  className="delete-btn"
+                  title="Delete"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDeleteTask(task.id);
+                  }}
+                >
+                  <TrashIcon />
+                </button>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       )}
 

@@ -33,7 +33,7 @@
   padding: 10px 20px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.85);
+  background: rgba(253, 252, 251, 0.85); /* Warm paper with opacity */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   position: relative;
@@ -94,11 +94,11 @@
   font-family: var(--font-main);
   cursor: pointer;
   transition: all var(--transition);
-  box-shadow: 0 2px 12px rgba(74, 144, 217, 0.35);
+  box-shadow: 0 2px 12px rgba(140, 122, 107, 0.35); /* Warm taupe glow */
 }
 .upgrade-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(74, 144, 217, 0.5);
+  box-shadow: 0 4px 18px rgba(140, 122, 107, 0.5);
 }
 
 .top-icon {

@@ -6,7 +6,9 @@
 //   - backendOk: whether the backend is reachable
 
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from './components/Sidebar';
+import ParticleNetwork from './components/ParticleNetwork';
 import HomePage from './pages/HomePage';
 import ResearchPage from './pages/ResearchPage';
 import { createResearchTask, listResearchTasks, deleteResearchTask, checkHealth } from './services/api';
@@ -74,8 +76,8 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {/* Ambient mesh background */}
-      <div className="glow-bg" />
+      {/* Dynamic AI Particle background */}
+      <ParticleNetwork />
 
       {/* Sidebar */}
       <Sidebar
@@ -121,10 +123,31 @@ export default function App() {
         </header>
 
         {/* Page content */}
-        {currentTask
-          ? <ResearchPage task={currentTask} onNewResearch={handleNewResearch} onTaskUpdate={handleTaskUpdate} />
-          : <HomePage onSubmit={handleSubmit} isLoading={isLoading} />
-        }
+        <AnimatePresence mode="wait">
+          {currentTask ? (
+            <motion.div
+              key="research"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <ResearchPage task={currentTask} onNewResearch={handleNewResearch} onTaskUpdate={handleTaskUpdate} />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="home"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+              style={{ width: '100%', height: '100%' }}
+            >
+              <HomePage onSubmit={handleSubmit} isLoading={isLoading} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </main>
     </div>
   );
