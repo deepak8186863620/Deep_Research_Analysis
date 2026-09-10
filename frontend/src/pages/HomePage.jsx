@@ -63,23 +63,18 @@ export default function HomePage({ onSubmit, isLoading }) {
   return (
     <div className="home-page">
       {/* Greeting */}
-<<<<<<< HEAD
-      <div className="greeting fade-up">
-        <h1 className="greeting-title">Let's dive in </h1>
-=======
-      <motion.div 
+      <motion.div
         className="greeting"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <h1 className="greeting-title">Let's start, Deepak</h1>
->>>>>>> f5bb9be ( web page color upadtion)
+        <h1 className="greeting-title">Let's start,Exploring </h1>
         <p className="greeting-subtitle">Ask anything. I'll research it across academic papers and the web.</p>
       </motion.div>
 
       {/* Suggestion chips */}
-      <motion.div 
+      <motion.div
         className="chips"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -98,7 +93,7 @@ export default function HomePage({ onSubmit, isLoading }) {
       </motion.div>
 
       {/* Research input */}
-      <motion.div 
+      <motion.div
         className="input-wrapper"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -155,7 +150,7 @@ export default function HomePage({ onSubmit, isLoading }) {
 
         {/* Optional instructions panel */}
         {showInstructions && (
-          <motion.div 
+          <motion.div
             className="instructions-panel"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
@@ -172,7 +167,7 @@ export default function HomePage({ onSubmit, isLoading }) {
         )}
       </motion.div>
 
-      <motion.p 
+      <motion.p
         className="disclaimer"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
