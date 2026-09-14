@@ -1,4 +1,4 @@
-/* App.css */
+﻿/* App.css */
 
 /* ── Shell Layout ── */
 .app-shell {
@@ -7,6 +7,7 @@
   width: 100vw;
   overflow: hidden;
   position: relative;
+  background: var(--bg-primary);
 }
 
 /* ── Main Content ── */
@@ -33,9 +34,9 @@
   padding: 10px 20px;
   flex-shrink: 0;
   border-bottom: 1px solid var(--border);
-  background: rgba(253, 252, 251, 0.85); /* Warm paper with opacity */
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(5, 5, 8, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: relative;
   z-index: 10;
 }
@@ -53,7 +54,7 @@
   padding: 7px 14px;
   border-radius: 20px;
   border: 1px solid var(--border);
-  background: transparent;
+  background: var(--bg-glass);
   color: var(--text-secondary);
   font-size: 13px;
   font-family: var(--font-main);
@@ -61,9 +62,9 @@
   transition: all var(--transition);
 }
 .open-sidebar-btn:hover {
-  background: var(--bg-hover);
-  color: var(--text-primary);
+  background: var(--bg-glass-hover);
   border-color: var(--border-hover);
+  color: var(--text-primary);
 }
 
 .top-right {
@@ -79,26 +80,26 @@
   border-radius: 12px;
 }
 .backend-badge.offline {
-  background: rgba(224, 92, 92, 0.1);
-  color: #e05c5c;
-  border: 1px solid rgba(224, 92, 92, 0.2);
+  background: rgba(244, 114, 182, 0.1);
+  color: #f472b6;
+  border: 1px solid rgba(244, 114, 182, 0.2);
 }
 
 .upgrade-btn {
   padding: 8px 18px;
   border-radius: 20px;
-  background: var(--accent-gradient);
+  background: var(--gradient-primary);
   color: #fff;
   font-size: 13px;
   font-weight: 600;
   font-family: var(--font-main);
   cursor: pointer;
   transition: all var(--transition);
-  box-shadow: 0 2px 12px rgba(140, 122, 107, 0.35); /* Warm taupe glow */
+  box-shadow: 0 2px 16px rgba(109, 76, 255, 0.4);
 }
 .upgrade-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 18px rgba(140, 122, 107, 0.5);
+  box-shadow: 0 4px 24px rgba(109, 76, 255, 0.6);
 }
 
 .top-icon {
@@ -108,4 +109,7 @@
   color: var(--text-secondary);
   transition: all var(--transition);
 }
-.top-icon:hover { background: var(--bg-hover); color: var(--text-primary); }
+.top-icon:hover {
+  background: var(--bg-glass-hover);
+  color: var(--text-primary);
+}

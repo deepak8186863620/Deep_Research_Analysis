@@ -1,41 +1,71 @@
 /* ============================================================
    index.css — Global Design System
-   Deep Research Analysis — Gemini-inspired white UI
+   Deep Research Analysis — Unicorn Studio Dark Premium UI
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..800;1,6..72,300..800&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+
 
 /* ── CSS Variables ── */
 :root {
-  --bg-primary:      #FDFCFB; /* Warm paper off-white */
-  --bg-secondary:    #F4F3EE;
-  --bg-hover:        #EAE8E1;
-  --bg-card:         #FFFFFF;
+  /* Dark space background palette */
+  --bg-primary:      #050508;
+  --bg-secondary:    #0a0a14;
+  --bg-tertiary:     #0f0f1a;
+  --bg-card:         rgba(255, 255, 255, 0.04);
+  --bg-card-hover:   rgba(255, 255, 255, 0.07);
+  --bg-glass:        rgba(255, 255, 255, 0.05);
+  --bg-glass-hover:  rgba(255, 255, 255, 0.09);
+  --bg-hover:        rgba(255, 255, 255, 0.07);
 
-  --border:          rgba(0,0,0,0.06);
-  --border-hover:    rgba(0,0,0,0.12);
+  /* Borders */
+  --border:          rgba(255, 255, 255, 0.08);
+  --border-hover:    rgba(255, 255, 255, 0.16);
+  --border-accent:   rgba(109, 76, 255, 0.4);
 
-  --text-primary:    #2C2A25; /* Soft dark brown/black */
-  --text-secondary:  #5A564C;
-  --text-muted:      #9B968A;
+  /* Text */
+  --text-primary:    #f0eeff;
+  --text-secondary:  rgba(240, 238, 255, 0.65);
+  --text-muted:      rgba(240, 238, 255, 0.35);
 
-  --accent-blue:     #4A6B7C; /* Muted Slate */
-  --accent-purple:   #8C7A6B; /* Warm taupe */
-  --accent-red:      #C87968; /* Terracotta */
-  --accent-teal:     #6F8F72; /* Sage green */
-  --accent-gradient: linear-gradient(135deg, #4A6B7C, #8C7A6B);
+  /* Electric accent system */
+  --accent-primary:  #6d4cff;
+  --accent-secondary:#a855f7;
+  --accent-tertiary: #06b6d4;
+  --accent-hot:      #f472b6;
+  --accent-gold:     #fbbf24;
 
-  --glow-color:      rgba(74, 107, 124, 0.08);
-  --glow-strong:     rgba(74, 107, 124, 0.15);
+  /* Legacy compat aliases */
+  --accent-blue:     #6d4cff;
+  --accent-purple:   #a855f7;
+  --accent-gradient: linear-gradient(135deg, #6d4cff, #a855f7);
 
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #6d4cff 0%, #a855f7 50%, #06b6d4 100%);
+  --gradient-hero:    linear-gradient(135deg, #4f46e5 0%, #7c3aed 40%, #06b6d4 100%);
+  --gradient-card:    linear-gradient(135deg, rgba(109,76,255,0.1), rgba(6,182,212,0.05));
+
+  /* Glow */
+  --glow-primary:    rgba(109, 76, 255, 0.5);
+  --glow-secondary:  rgba(168, 85, 247, 0.4);
+  --glow-cyan:       rgba(6, 182, 212, 0.4);
+  --glow-color:      rgba(109, 76, 255, 0.15);
+  --glow-strong:     rgba(109, 76, 255, 0.3);
+
+  /* Layout */
   --sidebar-width:   72px;
-  --sidebar-open:    260px;
-  --input-radius:    16px; /* Less pill-shaped, more grounded */
+  --sidebar-open:    270px;
+  --input-radius:    20px;
 
-  --font-heading:    'Newsreader', serif;
+  /* Typography */
+  --font-heading:    'Space Grotesk', 'Inter', sans-serif;
   --font-main:       'Inter', sans-serif;
-  
-  --transition:      0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* Animation */
+  --transition:        0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-slow:   0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ── Reset ── */
@@ -53,71 +83,28 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.18); }
+::-webkit-scrollbar-thumb { background: rgba(109,76,255,0.3); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(109,76,255,0.5); }
 
 /* ── Utility ── */
 button { cursor: pointer; border: none; background: none; font-family: var(--font-main); }
 input, textarea { font-family: var(--font-main); outline: none; border: none; background: none; }
 a { text-decoration: none; color: inherit; }
 
-/* ── AI / RAG Data Grid Background ── */
+/* ── Background ── */
 .glow-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   background-color: var(--bg-primary);
-  /* The base tech grid */
-  background-image: 
-    linear-gradient(to right, rgba(66, 133, 244, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(66, 133, 244, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
-  overflow: hidden;
-}
-
-/* Neural/RAG glowing data clusters (representing vector space) */
-.glow-bg::before {
-  content: "";
-  position: absolute;
-  width: 200vw;
-  height: 200vh;
-  top: -50%;
-  left: -50%;
-  background:
-    radial-gradient(circle at 40% 40%, rgba(66, 133, 244, 0.08), transparent 40%),
-    radial-gradient(circle at 60% 60%, rgba(155, 114, 203, 0.08), transparent 40%),
-    radial-gradient(circle at 30% 70%, rgba(13, 148, 136, 0.05), transparent 40%);
-  animation: ai-nodes-move 30s infinite linear;
-}
-
-/* Retrieval scanline / data stream effect */
-.glow-bg::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to bottom, transparent, rgba(66, 133, 244, 0.04) 50%, transparent);
-  background-size: 100% 200%;
-  animation: data-scan 8s infinite linear;
-}
-
-@keyframes ai-nodes-move {
-  0% { transform: rotate(0deg) scale(1); }
-  50% { transform: rotate(180deg) scale(1.1); }
-  100% { transform: rotate(360deg) scale(1); }
-}
-
-@keyframes data-scan {
-  0% { background-position: 0% -100%; }
-  100% { background-position: 0% 200%; }
 }
 
 /* ── Fade-in Animation ── */
@@ -157,6 +144,6 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Glow Pulse (used by model dot) ── */
 @keyframes glowPulse {
-  0%   { box-shadow: 0 0 4px var(--accent-purple); }
-  100% { box-shadow: 0 0 12px var(--accent-purple), 0 0 20px rgba(155, 114, 203, 0.4); }
+  0%   { box-shadow: 0 0 6px var(--glow-primary); }
+  100% { box-shadow: 0 0 16px var(--glow-primary), 0 0 32px var(--glow-secondary); }
 }

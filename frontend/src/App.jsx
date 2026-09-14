@@ -1,4 +1,4 @@
-// App.jsx
+﻿// App.jsx
 // PURPOSE: Root component. Manages global state:
 //   - sidebarOpen: whether the sidebar is expanded
 //   - currentTask: the active research task being viewed
@@ -8,7 +8,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Sidebar from './components/Sidebar';
-import ParticleNetwork from './components/ParticleNetwork';
+import UnicornBackground from './components/UnicornBackground';
 import HomePage from './pages/HomePage';
 import ResearchPage from './pages/ResearchPage';
 import { createResearchTask, listResearchTasks, deleteResearchTask, checkHealth } from './services/api';
@@ -51,7 +51,7 @@ export default function App() {
   // Called when user clicks "New Research" or sidebar item
   const handleNewResearch = () => setCurrentTask(null);
 
-  // When history item is clicked, update sidebar's active task
+  // When history item is clicked, update sidebar active task
   const handleSelectTask = (task) => {
     setCurrentTask(task);
   };
@@ -76,8 +76,8 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      {/* Dynamic AI Particle background */}
-      <ParticleNetwork />
+      {/* Unicorn Studio-style animated background */}
+      <UnicornBackground />
 
       {/* Sidebar */}
       <Sidebar
