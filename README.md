@@ -1,118 +1,195 @@
+﻿<div align="center">
+
 # Deep Research Analysis
 
-An advanced, AI-powered research assistant and synthesis pipeline that intelligently retrieves, ranks, and analyzes information from academic papers and web sources. This project provides a sophisticated web interface paired with a powerful LangGraph-based backend to automate complex research workflows.
+**An AI-powered, multi-phase research assistant that retrieves, ranks, verifies, and synthesizes information from academic papers and the web — in real time.**
 
-**Created by: Deepak Prajapati & Nishanth**
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.111+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+[![Contributors](https://img.shields.io/github/contributors/deepak8186863620/Deep_Research_Analysis?style=flat-square)](https://github.com/deepak8186863620/Deep_Research_Analysis/graphs/contributors)
 
----
+[**Report a Bug**](https://github.com/deepak8186863620/Deep_Research_Analysis/issues/new?template=bug_report.md) · [**Request a Feature**](https://github.com/deepak8186863620/Deep_Research_Analysis/issues/new?template=feature_request.md) · [**How to Contribute**](CONTRIBUTING.md)
 
-## 🌟 Key Features
-
-### Intelligent Backend (RAG & Multi-Agent)
-- **Multi-Agent Research Pipeline:** Utilizes **LangGraph** to coordinate search, retrieval, synthesis, and fact-checking workflows.
-- **Academic & Web Search:** Integrates with **Arxiv** for academic papers and **Tavily** for real-time web search.
-- **Custom Reranking & Retrieval:** Employs a hybrid search strategy (BM25 + dense embeddings via FAISS & Sentence Transformers) along with custom multi-signal ranking algorithms to ensure top relevance.
-- **AI Synthesis:** Powered by **Google Gemini** (via `langchain-google-genai`) to synthesize research and generate comprehensive insights.
-
-### Modern, Premium Frontend
-- **High-Performance UI:** Built with **React 19** and **Vite** for blazing fast performance.
-- **Dynamic Animations:** Features smooth transitions and sophisticated UI elements using **Framer Motion**.
-- **Interactive Data Visualization:** Includes interactive particle network backgrounds to visualize AI data processing.
-- **Rich Text Rendering:** Uses **React Markdown** to beautifully format generated research reports and analysis.
+</div>
 
 ---
 
-## 🛠️ Technology Stack
+## Key Features
 
-**Frontend:**
-- React (v19)
-- Vite
-- Framer Motion
-- React Router DOM
-- React Markdown
-
-**Backend:**
-- Python & FastAPI
-- LangChain & LangGraph
-- Google Gemini API (`langchain-google-genai`)
-- FAISS & Sentence Transformers
-- Tavily API & Arxiv API
+| Feature | Description |
+|---|---|
+| **Quick Mode** | LangGraph RAG loop — Semantic Scholar + Tavily + FAISS vector search |
+| **Deep Mode** | 5-phase pipeline: Discover → Fetch → Verify → Score → Report |
+| **Multi-Signal Ranking** | Cross-encoder relevance (50%) + Citation impact (25%) + Recency (15%) + Authority (10%) |
+| **SHA-256 Verification** | Every source is cryptographically fingerprinted |
+| **Confidence Scoring** | Claims rated High / Medium / Low / Disputed across independent sources |
+| **PDF + Markdown Export** | One-click export with a branded cover page |
+| **Real-time Progress** | Live step-by-step progress streamed to the UI |
+| **Session History** | All research tasks stored and accessible from the sidebar |
 
 ---
 
-## 🚀 Getting Started
+## Architecture
+
+```mermaid
+graph TD
+    User([Browser]) -->|Submit Topic| React[React 19 + Vite]
+    React -->|POST /api/research| FastAPI[FastAPI Backend]
+    FastAPI -->|Quick Mode| LangGraph[LangGraph RAG Agent]
+    FastAPI -->|Deep Mode| DeepAgent[5-Phase Deep Agent]
+
+    LangGraph --> SemanticScholar[(Semantic Scholar API)]
+    LangGraph --> Tavily[(Tavily Web Search)]
+    LangGraph --> FAISS[(FAISS Vector Store)]
+
+    DeepAgent --> SemanticScholar
+    DeepAgent --> ArXiv[(arXiv API)]
+    DeepAgent --> Tavily
+    DeepAgent --> Ranker[Multi-Signal Ranker]
+    DeepAgent --> WebScraper[SHA-256 Web Scraper]
+    DeepAgent --> Gemini[Google Gemini LLM]
+
+    FastAPI --> MongoDB[(MongoDB Atlas)]
+    React -->|Poll GET /api/research/:id| FastAPI
+```
+
+---
+
+## Quick Start
 
 ### Prerequisites
-- Node.js (v18+)
-- Python (3.9+)
-- API Keys for Google Gemini and Tavily Search.
+- **Python** 3.10+
+- **Node.js** 18+
+- **MongoDB Atlas** URI (free tier works)
+- API keys: [Google Gemini](https://aistudio.google.com/app/apikey) · [Tavily](https://app.tavily.com) · [Semantic Scholar](https://www.semanticscholar.org/product/api) *(optional)*
 
-### 1. Clone the Repository
+### 1. Clone
 ```bash
 git clone https://github.com/deepak8186863620/Deep_Research_Analysis.git
 cd Deep_Research_Analysis
 ```
 
-### 2. Backend Setup
-Navigate to the backend directory, create a virtual environment, and install dependencies:
+### 2. Backend
 ```bash
 cd backend
-python -m venv .venv
-
-# Activate the virtual environment
-# On Windows:
-.venv\Scripts\activate
-# On Mac/Linux:
-source .venv/bin/activate
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # Mac / Linux
 
 pip install -r requirements.txt
 ```
 
-**Environment Variables (`backend/.env`):**
-Create a `.env` file in the `backend` directory and add your API keys:
+Create `backend/.env`:
 ```env
+MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/deep_research
 GOOGLE_API_KEY=your_gemini_api_key
 TAVILY_API_KEY=your_tavily_api_key
-# Add any other required environment variables here
+SEMANTIC_SCHOLAR_API_KEY=your_ss_api_key   # optional but recommended
+GEMINI_MODEL=gemini-2.0-flash
 ```
 
-**Run the Backend Server:**
 ```bash
 uvicorn app.main:app --reload
+# API running at http://localhost:8000
 ```
-The backend API will run at `http://localhost:8000`.
 
-### 3. Frontend Setup
-Open a new terminal, navigate to the frontend directory, and install dependencies:
+### 3. Frontend
 ```bash
-cd frontend
+cd ../frontend
 npm install
-```
-
-**Run the Development Server:**
-```bash
 npm run dev
+# App running at http://localhost:5173
 ```
-The frontend will be available at `http://localhost:5173`.
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
-```text
+```
 Deep_Research_Analysis/
-├── backend/                # FastAPI application, LangGraph agents, and API endpoints
-│   ├── app/                # Core application logic (routers, services, prompts, etc.)
-│   ├── requirements.txt    # Python dependencies
-│   └── test_*.py           # Backend test scripts
-├── frontend/               # React + Vite frontend application
-│   ├── src/                # React components, pages, styles, and utilities
-│   ├── package.json        # Node dependencies and scripts
-│   └── vite.config.js      # Vite configuration
-└── docs/                   # Additional documentation
+├── backend/
+│   ├── app/
+│   │   ├── api/            # FastAPI route handlers
+│   │   ├── core/           # Config + MongoDB connection
+│   │   ├── models/         # Pydantic schemas
+│   │   ├── prompts/        # Gemini prompt templates
+│   │   ├── services/
+│   │   │   ├── ranker.py           <- multi-signal ranking algorithm
+│   │   │   ├── deep_research_agent.py
+│   │   │   ├── research_agent.py
+│   │   │   └── semantic_scholar.py
+│   │   └── utils/
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   │   ├── components/     # Sidebar, ParticleNetwork
+│   │   ├── pages/          # HomePage, ResearchPage
+│   │   ├── services/       # api.js REST client
+│   │   └── styles/         # CSS design system
+│   └── package.json
+└── docs/
+    └── CODEBASE_DOCUMENTATION.md
 ```
 
 ---
 
-## 📝 License
-This project is proprietary and confidential. All rights reserved.
+## Ranking Algorithm
+
+The multi-signal ranker in [`backend/app/services/ranker.py`](backend/app/services/ranker.py) combines four signals:
+
+| Signal | Weight | Method |
+|---|---|---|
+| **Relevance** | 50% | `cross-encoder/ms-marco-MiniLM-L-6-v2` — query x abstract pair scoring |
+| **Citation Impact** | 25% | Log-normalized citation count (power-law friendly) |
+| **Recency** | 15% | Linear decay over 10-year window |
+| **Source Authority** | 10% | Semantic Scholar = 1.0 · arXiv = 0.7 · Web = 0.4 |
+
+---
+
+## Contributing
+
+**We actively welcome contributions!** Whether it is fixing a bug, adding a feature, or improving docs — every PR counts.
+
+Read [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
+
+### Good First Issues
+- [ ] Add unit tests for `ranker.py` signal functions
+- [ ] Dark/light theme toggle
+- [ ] Export results as DOCX
+- [ ] Rate-limit handling with exponential backoff for Semantic Scholar
+- [ ] Abstract language detection (non-English filtering)
+- [ ] Streaming LLM responses via SSE
+
+### Tech Stack
+`Python` · `FastAPI` · `LangGraph` · `LangChain` · `sentence-transformers` · `FAISS` · `React 19` · `Vite` · `Framer Motion` · `MongoDB`
+
+---
+
+## Technology Stack
+
+**Backend:** Python · FastAPI · LangGraph · LangChain · Google Gemini · FAISS · Sentence Transformers · MongoDB (Motor) · Tavily · arXiv
+
+**Frontend:** React 19 · Vite · Framer Motion · React Markdown · Vanilla CSS
+
+---
+
+## License
+
+MIT License — see [LICENSE](LICENSE) for details.
+
+---
+
+## Authors
+
+Built by [**Deepak Prajapati**](https://github.com/deepak8186863620) & **Nishanth**
+
+---
+
+<div align="center">
+
+**Star this repo if you find it useful — it helps more people discover the project!**
+
+</div>

@@ -45,6 +45,17 @@ function DownloadIcon() {
     </svg>
   );
 }
+function PdfIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="9" y1="13" x2="15" y2="13"/>
+      <line x1="9" y1="17" x2="15" y2="17"/>
+      <line x1="9" y1="9" x2="11" y2="9"/>
+    </svg>
+  );
+}
 
 export default function ResearchPage({ task, onNewResearch, onTaskUpdate }) {
   const [result, setResult]       = useState(task);
@@ -115,6 +126,184 @@ export default function ResearchPage({ task, onNewResearch, onTaskUpdate }) {
     URL.revokeObjectURL(url);
   }, [result]);
 
+  const handleDownloadPDF = useCallback(() => {
+    if (!result?.results) return;
+
+    // Grab the already-rendered markdown HTML from the DOM
+    const markdownEl = document.querySelector('.markdown-body');
+    if (!markdownEl) return;
+
+    const topicSafe = result.topic?.slice(0, 60) || 'Research Report';
+    const dateStr   = new Date().toLocaleDateString('en-US', {
+      year: 'numeric', month: 'long', day: 'numeric',
+    });
+
+    // Build a self-contained HTML document for the print iframe
+    const printHTML = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>${topicSafe}</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 11pt;
+      line-height: 1.75;
+      color: #1a1d27;
+      background: #fff;
+      padding: 0;
+    }
+
+    /* Cover strip */
+    .pdf-cover {
+      background: linear-gradient(135deg, #1e2235 0%, #252a3d 100%);
+      color: #fff;
+      padding: 36px 48px 28px;
+      margin-bottom: 32px;
+    }
+    .pdf-cover .label {
+      font-size: 9pt;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6b9bd2;
+      margin-bottom: 10px;
+    }
+    .pdf-cover h1 {
+      font-size: 20pt;
+      font-weight: 700;
+      line-height: 1.3;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .pdf-cover .meta {
+      font-size: 9pt;
+      color: #8a90a8;
+    }
+
+    /* Content area */
+    .pdf-body {
+      padding: 0 48px 48px;
+    }
+
+    h1 { font-size: 18pt; font-weight: 700; margin: 28px 0 12px; color: #1a1d27; }
+    h2 {
+      font-size: 13pt; font-weight: 700;
+      margin: 28px 0 10px;
+      color: #1a1d27;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #e2e5ef;
+    }
+    h3 { font-size: 11pt; font-weight: 600; margin: 18px 0 8px; color: #3a6ea8; }
+    h4 { font-size: 10pt; font-weight: 600; margin: 12px 0 6px; color: #555; }
+
+    p  { margin-bottom: 12px; color: #2d3148; }
+    strong { font-weight: 600; color: #1a1d27; }
+    em { font-style: italic; color: #6a5acd; }
+
+    ul, ol { margin: 0 0 12px 24px; color: #2d3148; }
+    li { margin-bottom: 5px; }
+    li::marker { color: #4a90d9; }
+
+    code {
+      background: #f3f4f8;
+      border: 1px solid #dde0ec;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 9pt;
+      color: #6a5acd;
+      font-family: 'Fira Code', 'Consolas', monospace;
+    }
+    pre {
+      background: #f3f4f8;
+      border: 1px solid #dde0ec;
+      border-radius: 8px;
+      padding: 14px 16px;
+      overflow: hidden;
+      margin: 0 0 12px;
+      page-break-inside: avoid;
+    }
+    pre code { background: none; border: none; padding: 0; color: #1a1d27; }
+
+    blockquote {
+      border-left: 3px solid #4a90d9;
+      padding: 6px 14px;
+      margin: 0 0 12px;
+      color: #444;
+      font-style: italic;
+      background: rgba(74,144,217,0.05);
+      border-radius: 0 6px 6px 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 16px;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+    th {
+      background: #f3f4f8;
+      border: 1px solid #dde0ec;
+      padding: 7px 10px;
+      text-align: left;
+      font-weight: 600;
+      color: #1a1d27;
+    }
+    td {
+      border: 1px solid #dde0ec;
+      padding: 7px 10px;
+      color: #2d3148;
+    }
+    tr:nth-child(even) td { background: #fafbfd; }
+
+    hr { border: none; border-top: 1px solid #e2e5ef; margin: 20px 0; }
+    a  { color: #4a90d9; text-decoration: underline; }
+
+    @page {
+      margin: 14mm 0;
+      size: A4;
+    }
+    h2, h3 { page-break-after: avoid; }
+  </style>
+</head>
+<body>
+  <div class="pdf-cover">
+    <div class="label">Deep Research Analysis</div>
+    <h1>${topicSafe}</h1>
+    <div class="meta">Generated on ${dateStr}</div>
+  </div>
+  <div class="pdf-body">
+    ${markdownEl.innerHTML}
+  </div>
+</body>
+</html>`;
+
+    // Inject into a hidden iframe and trigger print
+    const iframe = document.createElement('iframe');
+    iframe.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:0;height:0;border:none;';
+    document.body.appendChild(iframe);
+
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframeDoc.open();
+    iframeDoc.write(printHTML);
+    iframeDoc.close();
+
+    // Wait for fonts/images to load before printing
+    iframe.onload = () => {
+      setTimeout(() => {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+        // Remove the iframe after the print dialog closes
+        setTimeout(() => document.body.removeChild(iframe), 1000);
+      }, 400);
+    };
+  }, [result]);
+
   const status = STATUS_CONFIG[result?.status] || STATUS_CONFIG.pending;
   const isProcessing = result?.status === 'pending' || result?.status === 'processing';
 
@@ -142,9 +331,13 @@ export default function ResearchPage({ task, onNewResearch, onTaskUpdate }) {
                 {copied ? <CheckIcon /> : <CopyIcon />}
                 <span>{copied ? 'Copied!' : 'Copy'}</span>
               </button>
-              <button id="download-report-btn" className="action-btn" onClick={handleDownload} title="Download as .md">
+              <button id="download-md-btn" className="action-btn" onClick={handleDownload} title="Download as .md">
                 <DownloadIcon />
-                <span>Download</span>
+                <span>.md</span>
+              </button>
+              <button id="download-pdf-btn" className="action-btn action-btn--pdf" onClick={handleDownloadPDF} title="Download as PDF">
+                <PdfIcon />
+                <span>PDF</span>
               </button>
             </>
           )}
