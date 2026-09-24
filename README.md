@@ -1,4 +1,4 @@
-﻿<div align="center">
+<div align="center">
 
 # Deep Research Analysis
 
@@ -127,51 +127,55 @@ npm run dev
 Deep_Research_Analysis/
 ├── backend/
 │   ├── app/
+│   │   ├── agents/                      ← Agent module (reserved for future agents)
 │   │   ├── api/
-│   │   │   └── research.py          ← GET/POST/DELETE /api/research endpoints
+│   │   │   └── research.py              ← GET/POST/DELETE /api/research endpoints
 │   │   ├── core/
-│   │   │   ├── config.py            ← Pydantic BaseSettings (loads .env)
-│   │   │   └── database.py          ← Async Motor + MongoDB Atlas TLS connection
+│   │   │   ├── config.py                ← Pydantic BaseSettings (loads .env)
+│   │   │   └── database.py              ← Async Motor + MongoDB Atlas TLS connection
+│   │   ├── graph/                       ← LangGraph state graph definitions
 │   │   ├── models/
-│   │   │   └── research.py          ← ResearchRequest & ResearchResponse schemas
+│   │   │   └── research.py              ← ResearchRequest & ResearchResponse schemas
 │   │   ├── prompts/
-│   │   │   └── research_prompts.py  ← Gemini prompt templates (4-step research + follow-up)
+│   │   │   └── research_prompts.py      ← Gemini prompt templates (4-step research + follow-up)
 │   │   ├── services/
 │   │   │   ├── research_agent.py        ← Quick Mode: LangGraph RAG agent
 │   │   │   ├── deep_research_agent.py   ← Deep Mode: 5-phase verification pipeline
 │   │   │   ├── semantic_scholar.py      ← Semantic Scholar API client
 │   │   │   └── ranker.py                ← Multi-signal cross-encoder ranking
 │   │   ├── utils/
-│   │   │   └── text_utils.py        ← Text extraction, truncation, whitespace cleaning
-│   │   └── main.py                  ← FastAPI app entry point + CORS + lifespan
+│   │   │   └── text_utils.py            ← Text extraction, truncation, whitespace cleaning
+│   │   └── main.py                      ← FastAPI app entry point + CORS + lifespan
 │   ├── requirements.txt
-│   ├── .env.example                 ← Template for environment variables
-│   ├── faiss_demo.py                ← Standalone FAISS vector index demo
-│   ├── test_agent.py                ← LangGraph agent integration test
-│   ├── test_chunking.py             ← Semantic chunking unit test
-│   └── test_gemini_api.py           ← Gemini API connectivity test
+│   ├── .env.example                     ← Template for environment variables
+│   ├── faiss_demo.py                    ← Standalone FAISS vector index demo
+│   ├── test_agent.py                    ← LangGraph agent integration test
+│   ├── test_chunking.py                 ← Semantic chunking unit test
+│   └── test_gemini_api.py               ← Gemini API connectivity test
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── Sidebar.jsx           ← Collapsible nav + session history + status dots
-│   │   │   ├── ParticleNetwork.jsx   ← Canvas particle-connection background
-│   │   │   └── UnicornBackground.jsx ← Aurora orbs + starfield + mouse-reactive glow
+│   │   │   ├── Sidebar.jsx              ← Collapsible nav + session history + status dots
+│   │   │   ├── ParticleNetwork.jsx      ← Canvas particle-connection background
+│   │   │   └── UnicornBackground.jsx    ← Aurora orbs + starfield + mouse-reactive glow
 │   │   ├── pages/
-│   │   │   ├── HomePage.jsx          ← Hero input, topic chips, animated typewriter
-│   │   │   └── ResearchPage.jsx      ← Live progress, report render, copy/download
+│   │   │   ├── HomePage.jsx             ← Hero input, topic chips, animated typewriter
+│   │   │   └── ResearchPage.jsx         ← Live progress, report render, copy/download
 │   │   ├── services/
-│   │   │   └── api.js                ← REST client (list, create, get, delete, health)
-│   │   └── styles/
-│   │       ├── index.css             ← Global design tokens, HSL dark theme, animations
-│   │       ├── App.css               ← App grid shell, top bar, offline badge
-│   │       ├── HomePage.css          ← Hero layout, chip buttons, input card
-│   │       ├── ResearchPage.css      ← Status pills, progress logs, markdown styling
-│   │       └── Sidebar.css           ← Sidebar drawer, status dots, hover effects
+│   │   │   └── api.js                   ← REST client (list, create, get, delete, health)
+│   │   ├── styles/
+│   │   │   ├── HomePage.css             ← Hero layout, chip buttons, input card
+│   │   │   ├── ResearchPage.css         ← Status pills, progress logs, markdown styling
+│   │   │   └── Sidebar.css              ← Sidebar drawer, status dots, hover effects
+│   │   ├── App.jsx                      ← Root component: global state + routing logic
+│   │   ├── App.css                      ← App grid shell, top bar, offline badge
+│   │   ├── index.css                    ← Global design tokens, HSL dark theme, animations
+│   │   └── main.jsx                     ← Vite app entry point
 │   ├── index.html
 │   └── package.json
 ├── docs/
-│   └── CODEBASE_DOCUMENTATION.md    ← Full architectural + inter-file reference
-├── WorkingOfRankingAlgorithm.ipynb  ← Jupyter notebook explaining the ranking algorithm
+│   └── CODEBASE_DOCUMENTATION.md        ← Full architectural + inter-file reference
+├── WorkingOfRankingAlgorithm.ipynb      ← Jupyter notebook explaining the ranking algorithm
 ├── CONTRIBUTING.md
 └── LICENSE
 ```
@@ -218,7 +222,7 @@ See [`WorkingOfRankingAlgorithm.ipynb`](WorkingOfRankingAlgorithm.ipynb) for a d
 
 **Backend:** Python 3.10+ · FastAPI · LangGraph · LangChain · Google Gemini (`gemini-2.0-flash`) · FAISS (in-memory) · `sentence-transformers` (`all-MiniLM-L6-v2`, `ms-marco-MiniLM-L-6-v2`) · MongoDB Atlas (Motor async driver) · Tavily Search · arXiv API · Semantic Scholar API · Pydantic
 
-**Frontend:** React 19 · Vite · Framer Motion · `react-markdown` · Vanilla CSS · HTML5 Canvas API
+**Frontend:** React 19 · Vite 8 · React Router v7 · Framer Motion · `react-markdown` · Vanilla CSS · HTML5 Canvas API
 
 ---
 
